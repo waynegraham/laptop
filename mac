@@ -92,7 +92,7 @@ if [ ! -d "$HOME/.bash-it" ]; then
   ~/.bash_it/install.sh
 fi
 
-fancy echo "Installing latest Ruby..."
+fancy_echo "Installing latest Ruby..."
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
