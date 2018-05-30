@@ -65,7 +65,6 @@ brew "hub"
 
 # Heroku
 brew "heroku"
-brew "parity"
 
 # Security
 brew "ssh-copy-id"
