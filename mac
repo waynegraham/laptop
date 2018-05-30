@@ -1,0 +1,107 @@
+#!/bin/sh
+
+# Welcome to the CLIR/DLF laptop script.
+
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+gem_install_or_update() {
+  if gem list "$1" --installed > /dev/null; then
+    gem update "$@"
+  else
+    gem install "$@"
+  fi
+}
+
+set -e
+
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
+
+HOMEBREW_PREFIX="/usr/local"
+
+if [ -d "$HOMEBREW_PREFIX" ]; then
+  if ! [ -r "$HOMEBREW_PREFIX" ]; then
+    sudo chown -R "$LOGNAME:admin" /usr/local
+  fi
+else
+  sudo mkdir "$HOMEBREW_PREFIX"
+  sudo chflags norestricted "$HOMEBREW_PREFIX"
+  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
+fi
+
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    curl -fsS \
+      'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
+fi
+
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
+fancy_echo "Updating Homebrew formulae ..."
+brew update --force # https://github.com/Homebrew/brew/issues/1151
+
+brew bundle --file=- <<EOF
+# Unix
+brew "ack"
+brew "coreutils"
+brew "curl"
+brew "git"
+brew "node"
+brew "openssl"
+brew "the_silver_searcher"
+brew "vim"
+
+# Github
+brew "hub"
+
+# Heroku
+brew "heroku"
+brew "parity"
+
+# Security
+brew ssh-copy-id
+cask "gpg-suite"
+
+# Applications
+cask "atom"
+cask "box-drive"
+cask "adobe-creative-cloud"
+cask "firefox"
+cask "google-chrome"
+cask "google-hangouts"
+cask "iterm2"
+cask "lastpass"
+cask "libreoffice"
+cask "microsoft-office"
+cask "mvim"
+cask "slack"
+cask "zoom"
+EOF
+
+fancy_echo "Installing bash-it..."
+if [ ! -d "$HOME/.bash-it" ]; then
+  git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+  ~/.bash_it/install.sh
+fi
+
+fancy echo "Installing latest Ruby..."
+gem update --system
+gem_install_or_update "bundler"
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
+
+fancy_echo "Additional software to add:"
+fancy_echo "\t- SonicWall Mobile Connect (Apple App Store)"
+fancy_echo "\t- Microsoft Remote Desktop (Apple App Store)"
+fancy_echo "\t- OpenDNS (Box)"
+fancy_echo "\t- Continuum Monitoring (Box)"
+fancy_echo "\t- Konica Printer Drivers (Box)"
