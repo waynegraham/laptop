@@ -1,5 +1,7 @@
 # CLIR/DLF Mac Setup
 
+[![Build Status](https://travis-ci.org/waynegraham/laptop.svg?branch=master)](https://travis-ci.org/waynegraham/laptop)
+
 This is a script to help set up macOS for CLIR/DLF.
 
 It can be run multiple times on the same machine safely. It installs, upgrades, or skips packages based on if they are already installed on the machine.

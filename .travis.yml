@@ -1,6 +1,5 @@
 os: osx
 osx_image: xcode9.3
-ruby: 2.4.1
 before_install:
   - brew update
   - chmod +x mac
