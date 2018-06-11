@@ -111,7 +111,7 @@ fancy_echo "\t- Konica Printer Drivers (Box)"
 # New User Script
 #===========================================
 newuser_realname=Delcor Admin
-newuser_realname=admin2
+newuser_username=admin2
 newuser_password=
 
 newuser_admin=true
@@ -167,7 +167,7 @@ function createUserAccount {
 } #end function createUserAccount
 
 echo -n "Enter the password for the user $newuser_realname and press [ENTER]: "
-read -s newuser_password
+read -r -s newuser_password
 
 createUserAccount "$newuser_realname" "$newuser_username" "$newuser_password" "$newuser_admin"
 
