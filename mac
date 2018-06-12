@@ -100,7 +100,7 @@ gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Additional software to add:"
+fancy_echo "Additional software to install:"
 fancy_echo "\\t- SonicWall Mobile Connect (Apple App Store)"
 fancy_echo "\\t- Microsoft Remote Desktop (Apple App Store)"
 fancy_echo "\\t- OpenDNS (Box)"
@@ -167,8 +167,12 @@ createUserAccount() {
   fancy_echo "Admin: $createUserAccount_admin"
 } #end function createUserAccount
 
-echo -n "Enter the password for the user $newuser_realname and press [ENTER]: "
-read -r -s newuser_password
+if [[ ! -z "${TEST_PASSWORD}" ]]; then
+  echo "\\n\\nEnter the password for the user $newuser_realname and press [ENTER]: "
+  read -r -s newuser_password
+else
+  newuser_password = ${TEST_PASSWORD}
+fi
 
 createUserAccount "$newuser_realname" "$newuser_username" "$newuser_password" "$newuser_admin"
 
