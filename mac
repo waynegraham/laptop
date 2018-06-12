@@ -94,7 +94,6 @@ if [ ! -d "$HOME/.bash-it" ]; then
   ~/.bash_it/install.sh --silent
 fi
 
-:127
 fancy_echo "Installing latest Ruby..."
 gem update --system
 gem_install_or_update "bundler"
