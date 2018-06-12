@@ -168,10 +168,10 @@ createUserAccount() {
 } #end function createUserAccount
 
 if [[ ! -z "${TEST_PASSWORD}" ]]; then
-  echo "\\n\\nEnter the password for the user $newuser_realname and press [ENTER]: "
+  echo -n "\\n\\nEnter the password for the user $newuser_realname and press [ENTER]: "
   read -r -s newuser_password
 else
-  newuser_password = ${TEST_PASSWORD}
+  newuser_password=${TEST_PASSWORD}
 fi
 
 createUserAccount "$newuser_realname" "$newuser_username" "$newuser_password" "$newuser_admin"
