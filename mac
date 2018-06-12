@@ -9,7 +9,7 @@ fancy_echo() {
   local fmt="$1"; shift
 
   # shellcheck disable=SC2059
-  printf "${green}\n$fmt\n${normal}" "$@"
+  printf "${green}\\n$fmt\\n${normal}" "$@"
 }
 
 gem_install_or_update() {
@@ -101,22 +101,23 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo "Additional software to add:"
-fancy_echo "\t- SonicWall Mobile Connect (Apple App Store)"
-fancy_echo "\t- Microsoft Remote Desktop (Apple App Store)"
-fancy_echo "\t- OpenDNS (Box)"
-fancy_echo "\t- Continuum Monitoring (Box)"
-fancy_echo "\t- Konica Printer Drivers (Box)"
+fancy_echo "\\t- SonicWall Mobile Connect (Apple App Store)"
+fancy_echo "\\t- Microsoft Remote Desktop (Apple App Store)"
+fancy_echo "\\t- OpenDNS (Box)"
+fancy_echo "\\t- Continuum Monitoring (Box)"
+fancy_echo "\\t- Konica Printer Drivers (Box)"
 
 #===========================================
 # New User Script
 #===========================================
-newuser_realname=Delcor Admin
-newuser_username=admin2
-newuser_password=
+newuser_realname="Delcor Admin"
+newuser_username="admin2"
+newuser_password=""
 
 newuser_admin=true
 
-function verifyUserName {
+
+verifyUserName() {
   local userNameLookup=$(sudo dscl . -list /Users | grep $1)
   if [ "$userNameLookup" == "$1" ]; then
     fancy_echo "Error: $1 already exists. Exiting..."
@@ -127,7 +128,7 @@ function verifyUserName {
 }
 #end verifyUserID
 
-function createUserAccount {
+createUserAccount() {
   local createUserAccount_realname=$1
   local createUserAccount_username=$2
   local createUserAccount_password=$3
