@@ -176,3 +176,6 @@ fi
 
 createUserAccount "$newuser_realname" "$newuser_username" "$newuser_password" "$newuser_admin"
 
+# hostname set
+currentuser=$(id -un)
+sudo scutil --set HostName "$currentuser Mac"
