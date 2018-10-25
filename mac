@@ -61,13 +61,11 @@ brew "git"
 brew "node"
 brew "openssl"
 brew "the_silver_searcher"
+brew "topgrade"
 brew "vim"
 
 # Github
 brew "hub"
-
-# Heroku
-brew "heroku"
 
 # Security
 brew "ssh-copy-id"
@@ -81,7 +79,6 @@ cask "firefox"
 cask "google-chrome"
 cask "google-hangouts"
 cask "iterm2"
-cask "lastpass"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
