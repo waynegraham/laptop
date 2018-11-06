@@ -61,11 +61,13 @@ brew "git"
 brew "node"
 brew "openssl"
 brew "the_silver_searcher"
-brew "topgrade"
 brew "vim"
 
 # Github
 brew "hub"
+
+# Heroku
+brew "heroku"
 
 # Security
 brew "ssh-copy-id"
@@ -79,6 +81,7 @@ cask "firefox"
 cask "google-chrome"
 cask "google-hangouts"
 cask "iterm2"
+cask "lastpass"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
@@ -98,78 +101,4 @@ number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo "Additional software to install:"
-fancy_echo "\\t- SonicWall Mobile Connect (Apple App Store)"
-fancy_echo "\\t- Microsoft Remote Desktop (Apple App Store)"
 fancy_echo "\\t- OpenDNS (Box)"
-fancy_echo "\\t- Continuum Monitoring (Box)"
-fancy_echo "\\t- Konica Printer Drivers (Box)"
-
-#===========================================
-# New User Script
-#===========================================
-newuser_realname="Delcor Admin"
-newuser_username="admin2"
-newuser_password=""
-
-newuser_admin=true
-
-
-verifyUserName() {
-  local userNameLookup=$(sudo dscl . -list /Users | grep $1)
-  if [ "$userNameLookup" == "$1" ]; then
-    fancy_echo "Error: $1 already exists. Exiting..."
-    exit
-  else
-    fancy_echo "Selected username $1 is unique."
-  fi
-}
-#end verifyUserID
-
-createUserAccount() {
-  local createUserAccount_realname=$1
-  local createUserAccount_username=$2
-  local createUserAccount_password=$3
-  local createUserAccount_admin=$4
-
-  #clean up input
-  createUserAccount_username=`echo $createUserAccount_username | tr '[A-Z]' '[a-z]'`
-  createUserAccount_admin=`echo $createUserAccount_admin | tr '[A-Z]' '[a-z]'`
-  #call a function to verify the chosen username
-  verifyUserName $createUserAccount_username
-  #Determine the uid that can be applied
-  upperBound=$(sudo dscl . -list /Users UniqueID | awk '{print $2}' | sort -ug | tail -1)
-  createUserAccount_userID=$((upperBound+1))
-
-  #call the function to verify this ID
-  verifyUserID $createUserAccount_userID
-
-  #These commands create the user
-  sudo dscl . -create /Users/""$createUserAccount_username""
-  sudo dscl . -create /Users/""$createUserAccount_username"" UserShell /bin/bash
-  sudo dscl . -create /Users/""$createUserAccount_username"" RealName "$createUserAccount_realname"
-  sudo dscl . -create /Users/""$createUserAccount_username"" UniqueID $createUserAccount_userID
-  sudo dscl . -create /Users/""$createUserAccount_username"" PrimaryGroupID 20
-  sudo dscl . -create /Users/""$createUserAccount_username"" NFSHomeDirectory /Users/""$createUserAccount_username""
-  sudo dscl . -passwd /Users/""$createUserAccount_username"" $createUserAccount_password
-
-  if [ "$createUserAccount_admin" = "true" ] ; then
-    sudo dscl . -append /Groups/admin GroupMembership "$createUserAccount_username"
-    sudo dscl . -append /Groups/_appserveradm GroupMembership "$createUserAccount_username"
-    sudo dscl . -append /Groups/_appserverusr GroupMembership "$createUserAccount_username"
-  fi
-
-  fancy_echo "Added user with the following parameters:"
-  fancy_echo "Real name: $createUserAccount_realname"
-  fancy_echo "User name: $createUserAccount_username"
-  fancy_echo "Admin: $createUserAccount_admin"
-} #end function createUserAccount
-
-if [[ ! -z "${TEST_PASSWORD}" ]]; then
-  echo -n "\\n\\nEnter the password for the user $newuser_realname and press [ENTER]: "
-  read -r -s newuser_password
-else
-  newuser_password=${TEST_PASSWORD}
-fi
-
-createUserAccount "$newuser_realname" "$newuser_username" "$newuser_password" "$newuser_admin"
-
