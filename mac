@@ -74,7 +74,6 @@ cask "iterm2"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
-cask "zoom"
 EOF
 
 # fancy_echo "Installing bash-it..."
