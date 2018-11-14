@@ -63,16 +63,6 @@ brew "openssl"
 brew "the_silver_searcher"
 brew "vim"
 
-# Github
-brew "hub"
-
-# Heroku
-brew "heroku"
-
-# Security
-brew "ssh-copy-id"
-cask "gpg-suite"
-
 # Applications
 cask "atom"
 cask "box-drive"
@@ -81,7 +71,6 @@ cask "firefox"
 cask "google-chrome"
 cask "google-hangouts"
 cask "iterm2"
-cask "lastpass"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
