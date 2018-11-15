@@ -20,6 +20,8 @@ gem_install_or_update() {
   fi
 }
 
+# shellcheck disable=SC2154
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -76,17 +78,18 @@ cask "microsoft-office"
 cask "slack"
 EOF
 
-# fancy_echo "Installing bash-it..."
 if [ ! -d "$HOME/.bash-it" ]; then
   git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
   ~/.bash_it/install.sh --silent
 fi
 
-# fancy_echo "Installing latest Ruby..."
 gem update --system
 gem_install_or_update "bundler"
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-# fancy_echo "Additional software to install:"
-# fancy_echo "\\t- OpenDNS (Box)"
+if [ -f "$HOME/.laptop.local" ]; then
+  fancy_echo "Running your customizations from ~/.laptop.local ..."
+  # shellcheck disable=SC1090
+  . "$HOME/.laptop.local"
+fi
