@@ -44,17 +44,17 @@ if ! command -v brew >/dev/null; then
   # fancy_echo "Installing Homebrew ..."
   curl -fsS \
     'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
-    fi
+fi
 
-    if brew list | grep -Fq brew-cask; then
-      fancy_echo "Uninstalling old Homebrew-Cask ..."
-      brew uninstall --force brew-cask
-    fi
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
 
-    # fancy_echo "Updating Homebrew formulae ..."
-    brew update --force # https://github.com/Homebrew/brew/issues/1151
+# fancy_echo "Updating Homebrew formulae ..."
+brew update --force # https://github.com/Homebrew/brew/issues/1151
 
-    brew bundle -v --file=- <<EOF
+brew bundle -v --file=- <<EOF
 # Unix
 brew "ack"
 brew "coreutils"
@@ -76,6 +76,17 @@ cask "iterm2"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
+
+# Quick Look Plugins
+cask "qlcolorcode"
+cask "qlstephen"
+cask "qlmarkdown"
+cask "quicklook-json"
+cask "qlimagesize"
+cask "webpquicklook"
+cask "suspicious-package"
+cask "quicklookase"
+cask "qlvideo"
 EOF
 
 if [ ! -d "$HOME/.bash-it" ]; then
