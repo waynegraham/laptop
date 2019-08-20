@@ -75,6 +75,8 @@ cask "iterm2"
 cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
+cask "zoomus"
+cask "zoomus-outlook-plugin"
 
 # Quick Look Plugins
 cask "qlcolorcode"
