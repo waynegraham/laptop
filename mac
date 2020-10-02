@@ -122,7 +122,6 @@ cask "microsoft-office"
 cask "slack"
 cask "superduper"
 cask "zoomus"
-cask "zoomus-outlook-plugin"
 EOF
 
 fancy_echo "Updating Rubygems..."
