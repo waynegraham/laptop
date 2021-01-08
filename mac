@@ -71,6 +71,7 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 
 brew bundle -v --file=- <<EOF
 # Unix
+brew "gpg"
 brew "ack"
 brew "curl"
 brew "git"
