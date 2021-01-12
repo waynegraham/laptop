@@ -84,6 +84,7 @@ brew "zsh"
 # Applications
 cask "atom"
 cask "box-drive"
+cask "box-tools"
 cask "adobe-creative-cloud"
 cask "firefox"
 cask "google-chrome"
