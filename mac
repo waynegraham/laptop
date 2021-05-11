@@ -94,12 +94,13 @@ cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
 cask "superduper"
-cask "zoomus"
+cask "zoom"
 EOF
 
-fancy_echo "Updating Rubygems..."
-gem update --system
-gem_install_or_update 'bundler'
+# requires sudo becuase of how 11.x implmenets ruby
+# fancy_echo "Updating Rubygems..."
+# gem update --system
+# gem_install_or_update 'bundler'
 
 fancy_echo "Configuring Bundler..."
 number_of_cores=$(sysctl -n hw.ncpu)
