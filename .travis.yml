@@ -1,5 +1,5 @@
 os: osx
-osx_image: xcode12
+osx_image: xcode13.2
 env:
   - TEST_PASSWORD="@7(9U}K2kVh7><Yv"
 before_install:

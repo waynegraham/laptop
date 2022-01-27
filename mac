@@ -31,16 +31,9 @@ append_to_zshrc() {
   fi
 }
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-  fi
-}
-
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
 set -e
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -66,10 +59,28 @@ else
   sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
 fi
 
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
+    /bin/bash -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+    append_to_zshrc '# recommended by brew doctor'
+
+    # shellcheck disable=SC2016
+    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+
+    export PATH="/usr/local/bin:$PATH"
+fi
+
+if brew list | grep -Fq brew-cask; then
+  fancy_echo "Uninstalling old Homebrew-Cask ..."
+  brew uninstall --force brew-cask
+fi
+
 fancy_echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
-brew bundle -v --file=- <<EOF
+brew bundle --file=- <<EOF
 # Unix
 brew "gpg"
 brew "ack"
@@ -82,7 +93,7 @@ brew "vim"
 brew "zsh"
 
 # Applications
-cask "atom"
+cask "asana"
 cask "box-drive"
 cask "box-tools"
 cask "adobe-creative-cloud"
@@ -94,14 +105,11 @@ cask "libreoffice"
 cask "microsoft-office"
 cask "slack"
 cask "superduper"
+cask "visual-studio-code"
 cask "zoom"
 EOF
 
-# requires sudo becuase of how 11.x implmenets ruby
-# fancy_echo "Updating Rubygems..."
-# gem update --system
-# gem_install_or_update 'bundler'
-
+# Configure Ruby
 fancy_echo "Configuring Bundler..."
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
