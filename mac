@@ -12,6 +12,17 @@ fancy_echo() {
   printf "${green}\\n$fmt\\n${normal}" "$@"
 }
 
+append_to_zprofile() {
+  local text="$1"
+  
+  local file="$HOME/.zprofile"
+
+  if ! grep -Fqs "$text" "$file"; then
+    fancy_echo "Appending '$text' to $file"
+    echo "$text" >> "$file"
+  fi
+}
+
 append_to_zshrc() {
   local text="$1" zshrc
   local skip_new_line="${2:-0}"
@@ -46,7 +57,6 @@ fi
 
 # shellcheck disable=SC2016
 append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-append_to_zshrc 'eval "$(/opt/homebrew/bin/brew shellenv)"'
 
 HOMEBREW_PREFIX="/opt/local"
 
@@ -69,6 +79,7 @@ if ! command -v brew >/dev/null; then
 
     # shellcheck disable=SC2016
     append_to_zshrc 'export PATH="/opt/local/bin:$PATH"' 1
+    append_to_zprofile 'eval "$(/opt/homebrew/bin/brew shellenv)"'
 
     export PATH="/opt/local/bin:$PATH"
 fi
