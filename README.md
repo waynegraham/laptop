@@ -10,6 +10,18 @@ This script is largely based on [thoughtbot/laptop](https://github.com/thoughtbo
 
 # Install
 
+[Open the terminal](https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/)
+
+Install XCode Command Line Tools by pasting the following:
+
+`xcode-select --install`
+
+Answer any questions you are prompted to.
+
+Install [Homebrew](https://brew.sh/)
+
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
 Download the script:
 
 `curl --remote-name https://raw.githubusercontent.com/waynegraham/laptop/master/mac`
@@ -44,17 +56,16 @@ GitHub Tools:
 
 Productivity:
 
-- Atom
-- Box Drive
+- Asana
+- Box Drive (and box tools)
 - Adobe Creative Cloud
 - Firefox
 - Google Chrome
-- Google Hangouts
 - iterm2
 - Lastpass
 - Libre Office
-- Microsoft Office
-- mvim
+- Microsoft Office 365
+- Visual Studio Code
 - Slack
 - Zoom
 
