@@ -60,7 +60,7 @@ Productivity:
 - Firefox
 - Google Chrome
 - iterm2
-- Lastpass
+- 1Password
 - Libre Office
 - Microsoft Office 365
 - Visual Studio Code
