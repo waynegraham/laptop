@@ -100,6 +100,7 @@ brew update --force # https://github.com/Homebrew/brew/issues/1151
 
 brew bundle --file=- <<EOF
 # Unix
+brew "asimov"
 brew "gpg"
 brew "ack"
 brew "curl"
@@ -113,6 +114,7 @@ brew "zsh"
 cask "asana"
 cask "box-drive"
 cask "box-tools"
+cask "clipy"
 cask "adobe-creative-cloud"
 cask "firefox"
 cask "google-chrome"
